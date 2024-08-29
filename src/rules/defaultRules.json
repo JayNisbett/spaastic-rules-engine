@@ -1,0 +1,353 @@
+[
+    {
+        "rule": {
+            "name": "Room-Rent",
+            "attributes": [
+                {
+                    "name": "rooms",
+                    "type": "number"
+                },
+                {
+                    "name": "bathroom",
+                    "type": "number"
+                },
+                {
+                    "name": "floor",
+                    "type": "number"
+                },
+                {
+                    "name": "metropolitan",
+                    "type": "string"
+                },
+                {
+                    "name": "carparking",
+                    "type": "string"
+                }
+            ],
+            "decisions": [
+                {
+                    "conditions": {
+                        "all": [
+                            {
+                                "fact": "rooms",
+                                "operator": "equal",
+                                "value": 1
+                            },
+                            {
+                                "fact": "bathroom",
+                                "operator": "equal",
+                                "value": 1
+                            },
+                            {
+                                "fact": "metropolitan",
+                                "operator": "equal",
+                                "value": "No"
+                            }
+                        ]
+                    },
+                    "event": {
+                        "type": "£500"
+                    }
+                },
+                {
+                    "conditions": {
+                        "all": [
+                            {
+                                "fact": "rooms",
+                                "operator": "equal",
+                                "value": 1
+                            },
+                            {
+                                "fact": "bathroom",
+                                "operator": "equal",
+                                "value": 1
+                            },
+                            {
+                                "fact": "metropolitan",
+                                "operator": "equal",
+                                "value": "Yes"
+                            }
+                        ]
+                    },
+                    "event": {
+                        "type": "£750"
+                    }
+                },
+                {
+                    "conditions": {
+                        "all": [
+                            {
+                                "fact": "rooms",
+                                "operator": "equal",
+                                "value": 2
+                            },
+                            {
+                                "fact": "bathroom",
+                                "operator": "equal",
+                                "value": 1
+                            },
+                            {
+                                "fact": "metropolitan",
+                                "operator": "equal",
+                                "value": "No"
+                            }
+                        ]
+                    },
+                    "event": {
+                        "type": "£750"
+                    }
+                },
+                {
+                    "conditions": {
+                        "any": [
+                            {
+                                "all": [
+                                    {
+                                        "fact": "rooms",
+                                        "operator": "equal",
+                                        "value": 2
+                                    },
+                                    {
+                                        "fact": "bathroom",
+                                        "operator": "equal",
+                                        "value": 1
+                                    },
+                                    {
+                                        "fact": "metropolitan",
+                                        "operator": "equal",
+                                        "value": "Yes"
+                                    }
+                                ]
+                            },
+                            {
+                                "all": [
+                                    {
+                                        "fact": "rooms",
+                                        "operator": "equal",
+                                        "value": 3
+                                    },
+                                    {
+                                        "fact": "bathroom",
+                                        "operator": "equal",
+                                        "value": 2
+                                    },
+                                    {
+                                        "fact": "metropolitan",
+                                        "operator": "equal",
+                                        "value": "No"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "event": {
+                        "type": "£1000"
+                    }
+                },
+                {
+                    "conditions": {
+                        "any": [
+                            {
+                                "all": [
+                                    {
+                                        "fact": "rooms",
+                                        "operator": "equal",
+                                        "value": 3
+                                    },
+                                    {
+                                        "fact": "bathroom",
+                                        "operator": "equal",
+                                        "value": 2
+                                    },
+                                    {
+                                        "fact": "carparking",
+                                        "operator": "equal",
+                                        "value": "Yes"
+                                    },
+                                    {
+                                        "fact": "metropolitan",
+                                        "operator": "equal",
+                                        "value": "No"
+                                    }
+                                ]
+                            },
+                            {
+                                "all": [
+                                    {
+                                        "fact": "rooms",
+                                        "operator": "equal",
+                                        "value": 3
+                                    },
+                                    {
+                                        "fact": "bathroom",
+                                        "operator": "equal",
+                                        "value": 2
+                                    },
+                                    {
+                                        "fact": "carparking",
+                                        "operator": "equal",
+                                        "value": "No"
+                                    },
+                                    {
+                                        "fact": "metropolitan",
+                                        "operator": "equal",
+                                        "value": "Yes"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "event": {
+                        "type": "£1250"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "name": "Credit-Card-Eligibility",
+        "decisions": [
+            {
+                "event": {
+                    "type": "Eligible"
+                },
+                "conditions": {
+                    "all": [
+                        {
+                            "fact": "nationality",
+                            "value": "France",
+                            "operator": "equal"
+                        },
+                        {
+                            "fact": "income",
+                            "value": 1000,
+                            "operator": "greaterThan"
+                        },
+                        {
+                            "fact": "job",
+                            "value": "Yes",
+                            "operator": "equal"
+                        },
+                        {
+                            "fact": "creditScore",
+                            "value": 200,
+                            "operator": "greaterThan"
+                        }
+                    ]
+                }
+            },
+            {
+                "event": {
+                    "type": "Eligible"
+                },
+                "conditions": {
+                    "all": [
+                        {
+                            "fact": "nationality",
+                            "value": "France",
+                            "operator": "notEqual"
+                        },
+                        {
+                            "fact": "job",
+                            "value": "Yes",
+                            "operator": "equal"
+                        },
+                        {
+                            "any": [
+                                {
+                                    "fact": "income",
+                                    "value": 2000,
+                                    "operator": "greaterThan"
+                                },
+                                {
+                                    "fact": "creditScore",
+                                    "value": 400,
+                                    "operator": "greaterThan"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "event": {
+                    "type": "Eligible"
+                },
+                "conditions": {
+                    "all": [
+                        {
+                            "fact": "nationality",
+                            "value": "France",
+                            "operator": "notEqual"
+                        },
+                        {
+                            "fact": "job",
+                            "value": "Yes",
+                            "operator": "equal"
+                        },
+                        {
+                            "fact": "age",
+                            "value": 18,
+                            "operator": "lessThan"
+                        },
+                        {
+                            "any": [
+                                {
+                                    "fact": "income",
+                                    "value": 2000,
+                                    "operator": "greaterThan"
+                                },
+                                {
+                                    "fact": "creditScore",
+                                    "value": 400,
+                                    "operator": "greaterThan"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            {
+                "event": {
+                    "type": "Not Eligible"
+                },
+                "conditions": {
+                    "all": [
+                        {
+                            "fact": "nationality",
+                            "value": "France",
+                            "operator": "notEqual"
+                        },
+                        {
+                            "fact": "job",
+                            "value": "Yes",
+                            "operator": "notEqual"
+                        }
+                    ]
+                }
+            }
+        ],
+        "attributes": [
+            {
+                "name": "nationality",
+                "type": "string"
+            },
+            {
+                "name": "age",
+                "type": "number"
+            },
+            {
+                "name": "creditScore",
+                "type": "number"
+            },
+            {
+                "name": "income",
+                "type": "number"
+            },
+            {
+                "name": "job",
+                "type": "string"
+            }
+        ]
+    }
+]

@@ -1,18 +1,13 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import reducers from './reducers';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from "@reduxjs/toolkit";
+import AppReducer from "@src/reducers/AppReducer";
+import RulesetReducer from "@src/reducers/RulesetReducer";
 
-const devToolEnhancer = process.env.NODE_ENV !== 'production' ? composeWithDevTools : compose;
+const { combineReducers } = require("redux");
 
-const enhancer = devToolEnhancer(applyMiddleware(thunk));
+const rootReducer = combineReducers({
+	app: AppReducer,
+	ruleset: RulesetReducer,
+});
 
- export default () => {
-    const store = createStore(reducers, enhancer);
-    if (module.hot) {
-        module.hot.accept('./reducers', () => {
-            store.replaceReducer(reducers);
-        });
-    }
-    return store;
-}
+const store = configureStore({ reducer: rootReducer });
+export default store;

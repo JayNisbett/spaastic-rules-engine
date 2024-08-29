@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../button/button';
+import Button from '../button/Button';
 
 class Banner extends Component {
 
@@ -18,7 +18,7 @@ class Banner extends Component {
             default:
                 return 'btn-dark';
         }
-        
+
     }
 
     render() {

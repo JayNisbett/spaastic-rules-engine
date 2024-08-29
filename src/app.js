@@ -1,30 +1,28 @@
+import React, { StrictMode } from "react";
+import ReactDOM from "react-dom/client";
+import store from "@src/store";
+import { Provider } from "react-redux";
+import { CustomRoutes } from "@src/context/RouterContext";
+import { RouterProvider } from "react-router-dom";
+import Root from "./routes/Router";
+import { UserProvider } from "./context/UserContext";
+const FallbackElement = () => {
+	return (
+		<>
+			<div className="fallback">
+				<h1>404</h1>
+				<p>Page not found</p>
+			</div>
+		</>
+	);
+};
 
-import { AppContainer } from 'react-hot-loader';
-import React from 'react';
-import { render } from 'react-dom';
-import configureStore from './store';
-import { Provider } from 'react-redux';
-import ApplicationContainer from './containers/app/app-container';
-
-
-const store = configureStore();
-
-const component = (Root) =>
-        render(<AppContainer>
-            <Provider store={store}>
-                <Root />
-            </Provider>
-        </AppContainer>, document.getElementById('root'));
-
-
-component(ApplicationContainer);
-
-if (module.hot) {
-    module.hot.accept('./containers/app/app-container.js', () => {
-    component(ApplicationContainer);
-    });
-}
-
-
-
-
+ReactDOM.createRoot(document.getElementById("root")).render(
+	<StrictMode>
+		<UserProvider>
+			<Provider store={store}>
+				<Root />
+			</Provider>
+		</UserProvider>
+	</StrictMode>
+);

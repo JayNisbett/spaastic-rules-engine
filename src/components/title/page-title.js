@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const PageTitle = ({name, titleFlag}) => {
-    
+
     return (<div className="page-title">
         {titleFlag && <TitleIcon />}
         <div><h1>{name}</h1></div>
@@ -12,7 +12,7 @@ const PageTitle = ({name, titleFlag}) => {
 
 PageTitle.defaultProps = {
     name: '',
-    classname: '',
+    classname: 'fa fa-layers',
     titleFlag: false,
 };
 

@@ -1,96 +1,103 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import SweetAlert from 'react-bootstrap-sweetalert';
-import Search from '../search/search';
-import ApperanceContext from '../../context/apperance-context';
+import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
+import SweetAlert from "react-bootstrap-sweetalert";
+import Search from "../search/search";
+import ApperanceContext from "../../context/apperance-context";
 
-class ToolBar extends Component {
-    constructor(props) {
-        super(props);
-        this.handleReset = this.handleReset.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-        this.reset = this.reset.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-        this.state={ submitAlert: false, resetAlert:false, successAlert: false };
-    }
+const ToolBar = ({ handleAdd, reset, searchTxt }) => {
+	const [state, setState] = useState({ submitAlert: false, resetAlert: false, successAlert: false, successMsg: "" });
+	const { background } = useContext(ApperanceContext);
 
-    handleReset() {
-        this.setState({resetAlert: true});
-    }
+	const handleReset = () => {
+		setState(prevState => ({ ...prevState, resetAlert: true }));
+	};
 
-    handleSearch(value) {
-        this.props.searchTxt(value);
-    }
+	const handleSearch = value => {
+		searchTxt(value);
+	};
 
-    cancelAlert = () => {
-        this.setState({submitAlert: false, resetAlert: false, successAlert: false});
-    }
+	const cancelAlert = () => {
+		setState({ submitAlert: false, resetAlert: false, successAlert: false, successMsg: "" });
+	};
 
-    reset = () => {
-        this.props.reset();
-        this.setState({resetAlert: false, successAlert: true, successMsg: 'Your changes are reset'});
-    }
+	const resetState = () => {
+		reset();
+		setState({ resetAlert: false, successAlert: true, successMsg: "Your changes are reset" });
+	};
 
-    alert = () => {
-       return (<div>
-            {this.state.resetAlert && this.resetAlert()}
-            {this.state.successAlert && this.successAlert()}
-        </div>);
-    }
+	const alert = () => {
+		return (
+			<div>
+				{state.resetAlert && resetAlert()}
+				{state.successAlert && successAlert()}
+			</div>
+		);
+	};
 
-    successAlert = () => {
-        return (<SweetAlert
-            success
-            title={this.state.successMsg}
-            onConfirm={this.cancelAlert}
-          >
-          </SweetAlert>);
-    }
+	const successAlert = () => {
+		return (
+			<SweetAlert
+				success
+				title={state.successMsg}
+				onConfirm={cancelAlert}
+			></SweetAlert>
+		);
+	};
 
-    resetAlert = () => {
-        return (<SweetAlert
-            warning
-            showCancel
-            confirmBtnText="Yes, Reset it!"
-            confirmBtnBsStyle="danger"
-            title="Are you sure?"
-            onConfirm={this.reset}
-            onCancel={this.cancelAlert}
-            focusCancelBtn
-          >
-            You will not be able to recover the changes!
-          </SweetAlert>)
-    }
+	const resetAlert = () => {
+		return (
+			<SweetAlert
+				warning
+				showCancel
+				confirmBtnText="Yes, Reset it!"
+				confirmBtnBsStyle="danger"
+				title="Are you sure?"
+				onConfirm={resetState}
+				onCancel={cancelAlert}
+				focusCancelBtn
+			>
+				You will not be able to recover the changes!
+			</SweetAlert>
+		);
+	};
 
+	return (
+		<div className={`attributes-header ${background}`}>
+			{alert()}
+			<div
+				className="attr-link"
+				onClick={handleAdd}
+			>
+				<span className="plus-icon" />
+				<span className="text">Add</span>
+			</div>
+			<div
+				className="attr-link"
+				onClick={handleReset}
+			>
+				<span className="reset-icon" />
+				<span className="text">Reset</span>
+			</div>
+			<div>
+				<Search
+					onConfirm={handleSearch}
+					onChange={handleSearch}
+				/>
+			</div>
+		</div>
+	);
+};
 
-    render() {
-        const { background } = this.context;
-        return (<div className={`attributes-header ${background}`}>
-            {this.alert()}
-            <div className="attr-link" onClick={this.props.handleAdd}>
-                <span className="plus-icon" /><span className="text">Add</span> 
-            </div>
-            <div className="attr-link" onClick={this.handleReset}>
-                 <span className="reset-icon" /><span className="text">Reset</span> 
-            </div>
-            <div><Search onConfirm={this.handleSearch} onChange={this.handleSearch}/></div>
-        </div>)
-    }
-}
+ToolBar.defaultProps = {
+	handleAdd: () => false,
+	reset: () => false,
+	searchTxt: () => false,
+};
 
-
-ToolBar.contextType = ApperanceContext;
-
-ToolBar.defaultProps = ({
-    handleAdd: () => false,
-    reset: () =>  false,
-    searchTxt: () => false,
-});
-
-ToolBar.propTypes = ({
-    handleAdd: PropTypes.func,
-    reset: PropTypes.func,
-    searchTxt: PropTypes.func,
-});
+ToolBar.propTypes = {
+	handleAdd: PropTypes.func,
+	reset: PropTypes.func,
+	searchTxt: PropTypes.func,
+};
 
 export default ToolBar;
